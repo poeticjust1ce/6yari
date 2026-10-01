@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:php8.3
+FROM dunglas/frankenphp:php8.4
 
 RUN install-php-extensions \
     pdo_pgsql \
@@ -8,8 +8,7 @@ RUN install-php-extensions \
     opcache
 
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g npm@latest
+    && apt-get install -y nodejs
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -28,8 +27,6 @@ RUN npm run build
 RUN chown -R www-data:www-data \
     storage \
     bootstrap/cache
-
-RUN php artisan optimize
 
 EXPOSE 8000
 
