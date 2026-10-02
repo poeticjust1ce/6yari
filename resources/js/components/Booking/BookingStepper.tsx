@@ -7,17 +7,34 @@ type BookingStepperProps = {
 export default function BookingStepper({ currentStep }: BookingStepperProps) {
     return (
         <div className="w-full">
-            <div className="flex items-start">
+            {/* Numbers + progress lines */}
+            <div className="relative grid grid-cols-5">
+                {/* Background line */}
+                <div className="absolute left-[10%] right-[10%] top-1.75 h-px bg-border">
+                    {/* Progress */}
+                    <div
+                        className="h-full origin-left bg-primary transition-transform duration-500 ease-out"
+                        style={{
+                            transform: `scaleX(${
+                                currentStep / (steps.length - 1)
+                            })`,
+                        }}
+                    />
+                </div>
+
                 {steps.map((step, index) => {
                     const stepNumber = index + 1;
                     const isActive = index === currentStep;
                     const isCompleted = index < currentStep;
 
                     return (
-                        <div key={step} className="flex flex-1 items-start">
+                        <div
+                            key={step}
+                            className="relative flex justify-center"
+                        >
                             <button
                                 type="button"
-                                className={`shrink-0 text-xs font-medium tracking-wider transition-colors duration-300 ${
+                                className={`relative z-10 bg-card px-1 text-xs font-medium tracking-wider transition-colors duration-300 ${
                                     isActive || isCompleted
                                         ? "text-foreground"
                                         : "text-muted-foreground"
@@ -25,28 +42,17 @@ export default function BookingStepper({ currentStep }: BookingStepperProps) {
                             >
                                 {String(stepNumber).padStart(2, "0")}
                             </button>
-
-                            {index < steps.length - 1 && (
-                                <div className="mx-3 mt-1.75 h-px flex-1 overflow-hidden bg-border ">
-                                    <div
-                                        className={`h-full origin-left bg-primary transition-transform duration-500 ease-out ${
-                                            isCompleted
-                                                ? "scale-x-100"
-                                                : "scale-x-0"
-                                        }`}
-                                    />
-                                </div>
-                            )}
                         </div>
                     );
                 })}
             </div>
 
-            <div className="mt-2 flex">
+            {/* Labels */}
+            <div className="mt-2 grid grid-cols-5">
                 {steps.map((step, index) => (
                     <div
                         key={step}
-                        className={`flex-1 text-[0.65em] tracking-[0.15em] transition-colors duration-300 ${
+                        className={`text-center text-[0.65em] tracking-[0.15em] transition-colors duration-300 ${
                             index === currentStep
                                 ? "font-medium text-foreground"
                                 : "text-muted-foreground"

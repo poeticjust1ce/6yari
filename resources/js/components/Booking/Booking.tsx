@@ -127,7 +127,6 @@ export default function BookingPage({ data }: BookingProps) {
 
                 <div className="rounded-2xl border border-border/60 bg-card/90 p-5 shadow-2xl sm:p-8 md:p-10">
                     <BookingStepper currentStep={currentStep} />
-
                     <div className="mt-12">
                         {currentStep === 0 && (
                             <About data={booking} onChange={updateBooking} />
@@ -150,7 +149,7 @@ export default function BookingPage({ data }: BookingProps) {
                         )}
                     </div>
 
-                    {/* Navigation */}
+                    {/* nav */}
                     <div className="mt-12 flex items-center justify-between border-t border-border/60 pt-6">
                         {currentStep > 0 ? (
                             <Button
