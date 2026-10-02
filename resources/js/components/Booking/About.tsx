@@ -51,49 +51,53 @@ export default function About({ data, onChange }: AboutProps) {
                         onChange={(e) => onChange({ email: e.target.value })}
                     />
                 </div>
+                <div className="space-y-2">
+                    <Label htmlFor="email">Phone</Label>
+                    <div className="flex">
+                        <div className="flex items-center rounded-l-md border border-r-0 border-input bg-muted px-3 text-sm text-muted-foreground">
+                            +63
+                        </div>
 
-                <div className="flex">
-                    <div className="flex items-center rounded-l-md border border-r-0 border-input bg-muted px-3 text-sm text-muted-foreground">
-                        +63
+                        <Input
+                            id="phone"
+                            name="phone"
+                            type="tel"
+                            inputMode="numeric"
+                            placeholder="9XX XXX XXXX"
+                            className="rounded-l-none"
+                            autoComplete="tel"
+                            value={data.phone || "9"}
+                            onChange={(e) => {
+                                let value = e.target.value.replace(/\D/g, "");
+
+                                if (!value.startsWith("9")) {
+                                    value = "9" + value.replace(/^9+/, "");
+                                }
+
+                                value = value.slice(0, 10);
+
+                                let formatted = value;
+
+                                if (value.length > 3) {
+                                    formatted =
+                                        value.slice(0, 3) +
+                                        " " +
+                                        value.slice(3);
+                                }
+
+                                if (value.length > 6) {
+                                    formatted =
+                                        value.slice(0, 3) +
+                                        " " +
+                                        value.slice(3, 6) +
+                                        " " +
+                                        value.slice(6);
+                                }
+
+                                onChange({ phone: formatted });
+                            }}
+                        />
                     </div>
-
-                    <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        inputMode="numeric"
-                        placeholder="9XX XXX XXXX"
-                        className="rounded-l-none"
-                        autoComplete="tel"
-                        value={data.phone || "9"}
-                        onChange={(e) => {
-                            let value = e.target.value.replace(/\D/g, "");
-
-                            if (!value.startsWith("9")) {
-                                value = "9" + value.replace(/^9+/, "");
-                            }
-
-                            value = value.slice(0, 10);
-
-                            let formatted = value;
-
-                            if (value.length > 3) {
-                                formatted =
-                                    value.slice(0, 3) + " " + value.slice(3);
-                            }
-
-                            if (value.length > 6) {
-                                formatted =
-                                    value.slice(0, 3) +
-                                    " " +
-                                    value.slice(3, 6) +
-                                    " " +
-                                    value.slice(6);
-                            }
-
-                            onChange({ phone: formatted });
-                        }}
-                    />
                 </div>
             </div>
         </div>
